@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IonContent, IonGrid, IonRow, IonCol, IonButton, IonIcon, IonSearchbar } from '@ionic/react';
 import { subDays, subHours } from 'date-fns';
 import { productApi, categoryOptions, statusOptions, stockOptions } from '../../Constants/products';
-import { pencilOutline } from 'ionicons/icons';
+import { pencilOutline, trash } from 'ionicons/icons';
 import './Component.scss';
 
 const now = new Date();
@@ -58,6 +58,12 @@ const ProductsList = () => {
 
   const goToNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handleButtonClick = (e) => {
+    console.log(e)
+    // Navegar a la página con el ID del objeto en la URL
+    history.push(`/products/edit/${objectId}`);
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -158,8 +164,11 @@ const ProductsList = () => {
                     <td>{product.currency}{product.price.toFixed(2)}</td>
                     <td>{product.quantity}</td>
                     <td>
-                      <IonButton color="primary" fill="clear">
+                      <IonButton color="primary" fill="clear" onClick={handleButtonClick}>
                         <IonIcon icon={pencilOutline} />
+                      </IonButton>
+                      <IonButton color="primary" fill="clear">
+                        <IonIcon icon={trash} />
                       </IonButton>
                     </td>
                   </tr>
@@ -177,7 +186,7 @@ const ProductsList = () => {
                 onClick={goToPreviousPage}
                 disabled={currentPage === 1}
               >
-                Previous
+                Anterior
               </IonButton>
               <IonButton
                 color="primary"
@@ -185,7 +194,7 @@ const ProductsList = () => {
                 onClick={goToNextPage}
                 disabled={currentItems.length < itemsPerPage}
               >
-                Next
+                Siguiente
               </IonButton>
             </div>
           </IonCol>

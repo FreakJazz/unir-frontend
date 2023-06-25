@@ -10,7 +10,8 @@
   }
   
   .create-product-form input[type="text"],
-  .create-product-form input[type="number"] {
+  .create-product-form input[type="number"],
+  .create-product-form input[type="selector"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;

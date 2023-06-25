@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IonButton, IonInput, IonLabel, IonSelect, IonSelectOption, IonIcon, IonImg } from '@ionic/react';
 import { categoryOptions } from '../../Constants/products';
 import { cameraOutline } from 'ionicons/icons';
 import './Component.scss';
 
-const CreateProductForm = () => {
+const EditProductForm = ({productId}) => {
+
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [image, setImage] = useState(null);
+  const [product, setProduct] = useState({});
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
@@ -26,6 +28,25 @@ const CreateProductForm = () => {
       reader.readAsDataURL(file);
     }
   };
+
+
+    useEffect(() => {
+        try{
+            const data = axios
+            .get(`${API_URL}/products/${productId}`, {
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                setProduct(data);
+    
+            })
+            return data;
+        }
+        catch(e){
+            console.error(e.message);
+        }
+  }, [])
+    
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -96,4 +117,4 @@ const CreateProductForm = () => {
   );
 };
 
-export default CreateProductForm;
+export default EditProductForm;
